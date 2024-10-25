@@ -33,7 +33,6 @@ media/
 staticfiles/
 
 # PostgreSQL
-*.sql
 *.dump
 *.pgpass
 
