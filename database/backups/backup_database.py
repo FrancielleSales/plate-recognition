@@ -4,15 +4,15 @@ import os
 
 # Database Settings
 DATABASE = {
-    'NAME': 'pr_db',
-    'USER': 'user',
+    'NAME': 'db_pr',
+    'USER': 'dbpr',
     'PASSWORD': '321',
     'HOST': 'localhost',
     'PORT': 5432
 }
 
 # Folder where backups will be stored
-BACKUP_DIR = '/backups'
+BACKUP_DIR = '.'
 
 # Back up the database.
 def backup_database():

@@ -27,8 +27,7 @@ def execute_sql_file(file_path):
 # Runs the init.sql and debug.sql scripts
 if __name__ == '__main__':
     try:
-        execute_sql_file('sql/init.sql')
-        execute_sql_file('seeds/debug.sql')
-        print("Scripts executed succesfully!")
+        execute_sql_file('verify_database.sql')
+        print("Script executed succesfully!")
     except Exception as e:
         print(f"Error: {e}")
