@@ -11,7 +11,7 @@ const props = defineProps({
 <template>
   <div>
     <div class="container vertical-center">
-      <div class="card mx-auto" style="width: 25rem">
+      <div class="card mx-auto bg-light" style="width: 25rem">
         <div class="card-body">
           <h3 class="card-title text-center">{{ cardName }}</h3>
           <slot name="body" />
