@@ -8,7 +8,6 @@ Tool for automatic recognition and detection of Brazilian license plates in imag
 - Django
 - Node.js
 - Postgresql
-- Máquina com qualquer distribuição Linux (pode estar também em VM ou WSL)
 
 ### Database
 
