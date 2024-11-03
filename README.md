@@ -8,7 +8,6 @@ Tool for automatic recognition and detection of Brazilian license plates in imag
 - Django
 - Node.js
 - Postgresql
-- Máquina com qualquer distribuição Linux (pode estar também em VM ou WSL)
 
 ### Database
 
@@ -49,3 +48,21 @@ python3 backup_database.py
 ### Backend
 
 ### Frontend
+
+**Installation of dependencies**
+
+```sh
+cd frontend
+npm install
+```
+
+**Start frontend**
+```sh
+npm run serve
+```
+
+> *Nesse ponto já tem-se o frontend funcional*
+
+**Port that the frontend uses**
+
+> localhost:8080
