@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 
 import useApi from "../composables/useApi.js";
@@ -10,18 +10,23 @@ import CardCentered from "@/components/CardCentered.vue";
 const router = useRouter();
 
 // Define component variables
+const errorMessage = ref("");
+const loading = ref(false);
 const userLogin = ref({
   email: "",
   password: "",
 });
+const showRegister = ref(false);
 const userRegister = ref({
   email: "",
   password: "",
 });
-const errorMessage = ref("");
-const loading = ref(false);
-const showRegister = ref(false);
 const { post } = useApi();
+
+// Control card name value
+const cardName = computed(() => {
+  return showRegister.value ? 'Cadastrar' : 'Entrar';
+});
 
 // Function to validate fields
 const validateFields = (user) => {
@@ -56,11 +61,8 @@ const handleLogin = async () => {
     // Store userLogin information in localStorage
     localStorage.setItem("user_id", res.id);
     localStorage.setItem("user_name", res.name);
-    localStorage.setItem("user_type", res.privileged);
-    localStorage.setItem("user_active", res.active);
-    localStorage.setItem("user_session", new Date());
 
-    router.push("/projetos");
+    router.push("/inicio");
   } catch (error) {
     errorMessage.value = error.value;
   }
@@ -88,7 +90,7 @@ const handleRegister = async () => {
 
 <template>
   <div>
-    <CardCentered cardName="Login">
+    <CardCentered :cardName="cardName">
       <template #body>
         <div v-if="!showRegister">
           <form @submit.prevent="handleLogin">
