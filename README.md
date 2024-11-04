@@ -61,8 +61,6 @@ npm install
 npm run serve
 ```
 
-> *Nesse ponto já tem-se o frontend funcional*
-
 **Port that the frontend uses**
 
 > localhost:8080

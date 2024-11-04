@@ -1,5 +1,5 @@
 <script setup>
-// Props
+// Component's properties
 const props = defineProps({
   cardName: {
     type: String,

@@ -9,7 +9,7 @@ import CardCentered from "@/components/CardCentered.vue";
 // Instance variables
 const router = useRouter();
 
-// Define component variables
+// Component's variables
 const errorMessage = ref("");
 const loading = ref(false);
 const userLogin = ref({
@@ -25,7 +25,7 @@ const { post } = useApi();
 
 // Control card name value
 const cardName = computed(() => {
-  return showRegister.value ? 'Cadastrar' : 'Entrar';
+  return showRegister.value ? "Cadastrar" : "Entrar";
 });
 
 // Function to validate fields
@@ -37,11 +37,11 @@ const validateFields = (user) => {
   }
 
   const checkEmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  
+
   if (!checkEmailRegex.test(user.email)) {
     return "Por favor, insira um email válido.";
   }
-  
+
   return null;
 };
 
@@ -131,11 +131,15 @@ const handleRegister = async () => {
           <div class="text-center mt-4">
             <p>
               Ainda não possui uma conta?
-              <a class="text-primary hover-underline" @click="showRegister = true">Cadastre-se</a>
+              <a
+                class="text-primary hover-underline"
+                @click="showRegister = true"
+                >Cadastre-se</a
+              >
             </p>
           </div>
-      </div>
-      <div v-if="showRegister">
+        </div>
+        <div v-if="showRegister">
           <form @submit.prevent="handleRegister">
             <div class="mt-4 mb-2">
               <label for="email" class="form-label">E-mail</label>
@@ -171,7 +175,7 @@ const handleRegister = async () => {
               </button>
             </div>
           </form>
-      </div>
+        </div>
       </template>
     </CardCentered>
   </div>

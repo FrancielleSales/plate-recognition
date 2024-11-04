@@ -8,9 +8,9 @@ import CardCentered from "@/components/CardCentered.vue";
 import NavBar from "@/components/NavBar.vue";
 
 // Instance variables
-const router = useRouter()
+const router = useRouter();
 
-// Component variables
+// Component's variables
 const isSessionExpired = !useCheckSession();
 
 // Sends user to evaluation view
@@ -30,33 +30,33 @@ onMounted(() => {
 </script>
 
 <template>
-    <div>
-        <NavBar current-page="/inicio"></NavBar>
-        <div class="container">
-          <div class="row">
-              <div class="col">
-                  <CardCentered>
-                      <template #body>
-                          <div class="text-center custom-color" @click="goEvaluate">
-                              <i class="bi bi-car-front custom-icon-size"></i>
-                              <p class="custom-font-size">Avaliar imagens</p>
-                          </div>
-                      </template>
-                  </CardCentered>
+  <div>
+    <NavBar current-page="/inicio"></NavBar>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <CardCentered>
+            <template #body>
+              <div class="text-center custom-color" @click="goEvaluate">
+                <i class="bi bi-car-front custom-icon-size"></i>
+                <p class="custom-font-size">Avaliar imagens</p>
               </div>
-              <div class="col">
-                  <CardCentered>
-                      <template #body >
-                          <div class="text-center custom-color" @click="goResults">
-                              <i class="bi bi-clipboard-data-fill custom-icon-size"></i>
-                              <p class="custom-font-size">Ver resultados</p>
-                          </div>
-                      </template>
-                  </CardCentered>
-              </div>
-          </div>
+            </template>
+          </CardCentered>
         </div>
+        <div class="col">
+          <CardCentered>
+            <template #body>
+              <div class="text-center custom-color" @click="goResults">
+                <i class="bi bi-clipboard-data-fill custom-icon-size"></i>
+                <p class="custom-font-size">Ver resultados</p>
+              </div>
+            </template>
+          </CardCentered>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped>
