@@ -15,7 +15,7 @@ const isSessionExpired = !useCheckSession();
 
 // Sends user to evaluation view
 const goEvaluate = () => {
-  router.push("/avaliacao");
+  router.push("/processamento");
 };
 
 // Sends user to results view
@@ -24,9 +24,9 @@ const goResults = () => {
 };
 
 // Check if session is valid
-onMounted(() => {
-  if (isSessionExpired) router.push("/entrar");
-});
+// onMounted(() => {
+//   if (isSessionExpired) router.push("/entrar");
+// });
 </script>
 
 <template>
@@ -39,7 +39,7 @@ onMounted(() => {
             <template #body>
               <div class="text-center custom-color" @click="goEvaluate">
                 <i class="bi bi-car-front custom-icon-size"></i>
-                <p class="custom-font-size">Avaliar imagens</p>
+                <p class="custom-font-size">Processar imagens</p>
               </div>
             </template>
           </CardCentered>
