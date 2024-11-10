@@ -7,9 +7,9 @@ import useCheckSession from "../composables/useCheckSession.js";
 import NavBar from "@/components/NavBar.vue";
 
 // Instance variables
-const router = useRouter()
+const router = useRouter();
 
-// Component variables
+// Component's variables
 const isSessionExpired = !useCheckSession();
 
 // Check if session is valid
@@ -19,10 +19,9 @@ onMounted(() => {
 </script>
 
 <template>
-    <div>
-        <NavBar></NavBar>
-    </div>
+  <div>
+    <NavBar></NavBar>
+  </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

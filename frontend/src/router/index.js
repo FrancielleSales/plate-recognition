@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
-import EvaluationView from "../views/EvaluationView.vue";
+import ProcessingView from "../views/ProcessingView.vue";
 import LandingView from "../views/LandingView.vue";
 import LoginView from "../views/LoginView.vue";
 import ResultsView from "../views/ResultsView.vue";
 
 const routes = [
   {
-    path: "/avaliacao",
-    name: "evaluationView",
-    component: EvaluationView,
+    path: "/processamento",
+    name: "ProcessingView",
+    component: ProcessingView,
   },
   {
     path: "/entrar",

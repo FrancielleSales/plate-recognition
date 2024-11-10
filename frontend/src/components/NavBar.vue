@@ -2,7 +2,7 @@
 import ButtonHome from "./ButtonHome.vue";
 import ButtonLogout from "./ButtonLogout.vue";
 
-// Props
+// Component's properties
 const props = defineProps({
   currentPage: {
     type: String,
@@ -12,8 +12,8 @@ const props = defineProps({
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
       <a class="navbar-brand fw-bold">Plate Recognition</a>
       <button
         type="button"
@@ -34,5 +34,5 @@ const props = defineProps({
         </div>
       </div>
     </div>
-    </nav>
+  </nav>
 </template>
