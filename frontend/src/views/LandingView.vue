@@ -24,9 +24,9 @@ const goResults = () => {
 };
 
 // Check if session is valid
-// onMounted(() => {
-//   if (isSessionExpired) router.push("/entrar");
-// });
+onMounted(() => {
+  if (isSessionExpired) router.push("/entrar");
+});
 </script>
 
 <template>
