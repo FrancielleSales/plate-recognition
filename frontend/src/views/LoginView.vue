@@ -2,8 +2,10 @@
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 
+import useAlert from "../composables/useAlert.js";
 import useApi from "../composables/useApi.js";
 
+import Alert from "@/components/Alert.vue";
 import CardCentered from "@/components/CardCentered.vue";
 
 // Instance variables
@@ -12,15 +14,17 @@ const router = useRouter();
 // Component's variables
 const errorMessage = ref("");
 const loading = ref(false);
-const userLogin = ref({
-  email: "",
-  password: "",
-});
+const userLogin = ref({});
 const showRegister = ref(false);
-const userRegister = ref({
-  email: "",
-  password: "",
-});
+const userRegister = ref({});
+const {
+  showAlert,
+  alertType,
+  alertMessage,
+  successAlert,
+  errorAlert,
+  clearAlert,
+} = useAlert();
 const { post } = useApi();
 
 // Control card name value
@@ -40,6 +44,10 @@ const validateFields = (user) => {
 
   if (!checkEmailRegex.test(user.email)) {
     return "Por favor, insira um email válido.";
+  }
+
+  if (user.password.length < 8) {
+    return "A senha deve ter ao menos 8 caracteres.";
   }
 
   return null;
@@ -62,6 +70,8 @@ const handleLogin = async () => {
     localStorage.setItem("user_id", res.id);
     localStorage.setItem("user_name", res.name);
 
+    userLogin.value = {};
+
     router.push("/inicio");
   } catch (error) {
     errorMessage.value = error.value;
@@ -77,14 +87,19 @@ const handleRegister = async () => {
   }
   loading.value = true;
 
+  clearAlert();
+
   try {
     const params = userRegister.value;
-    await post("/register", params);
+    await post("/users/register/", params);
+    successAlert("Usuário criado com sucesso!");
     showRegister.value = false;
   } catch (error) {
+    errorAlert("Erro ao tentar criar usuário!");
     errorMessage.value = error.value;
   }
   loading.value = false;
+  userRegister.value = {};
 };
 </script>
 
@@ -102,6 +117,7 @@ const handleRegister = async () => {
                 class="form-control"
                 placeholder="nome@exemplo.com"
                 v-model="userLogin.email"
+                maxlength="100"
               />
             </div>
             <div class="mb-2">
@@ -111,6 +127,7 @@ const handleRegister = async () => {
                 class="form-control"
                 id="password"
                 v-model="userLogin.password"
+                maxlength="20"
               />
               <small v-if="errorMessage" class="text-danger">
                 {{ errorMessage }}
@@ -142,6 +159,17 @@ const handleRegister = async () => {
         <div v-if="showRegister">
           <form @submit.prevent="handleRegister">
             <div class="mt-4 mb-2">
+              <label for="name" class="form-label">Nome</label>
+              <input
+                id="name"
+                type="text"
+                class="form-control"
+                placeholder="Nome Sobrenome"
+                v-model="userRegister.name"
+                maxlength="50"
+              />
+            </div>
+            <div class="mt-4 mb-2">
               <label for="email" class="form-label">E-mail</label>
               <input
                 id="email"
@@ -149,6 +177,7 @@ const handleRegister = async () => {
                 class="form-control"
                 placeholder="nome@exemplo.com"
                 v-model="userRegister.email"
+                maxlength="100"
               />
             </div>
             <div class="mb-2">
@@ -158,6 +187,7 @@ const handleRegister = async () => {
                 class="form-control"
                 id="password"
                 v-model="userRegister.password"
+                maxlength="20"
               />
               <small v-if="errorMessage" class="text-danger">
                 {{ errorMessage }}
@@ -178,5 +208,8 @@ const handleRegister = async () => {
         </div>
       </template>
     </CardCentered>
+    <div v-if="showAlert">
+      <Alert :message="alertMessage" :type="alertType"></Alert>
+    </div>
   </div>
 </template>
