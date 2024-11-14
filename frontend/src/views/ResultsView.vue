@@ -46,7 +46,7 @@ const refreshResultDeleted = (resultId) => {
 
 // Check if session is valid
 onMounted(() => {
-  // if (isSessionExpired) router.push("/entrar");
+  if (isSessionExpired) router.push("/entrar");
   fetchAllResults();
 });
 </script>

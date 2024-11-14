@@ -1,10 +1,10 @@
-from django.contrib.auth.hashers import make_password  # Função para criptografar a senha
-from rest_framework import serializers
-from .models import User
+from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
+from rest_framework import serializers
+from users.models.users import User
 import re
 
-class UserSerializer(serializers.ModelSerializer):
+class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'name', 'email', 'password', 'created_at']

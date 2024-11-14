@@ -40,7 +40,6 @@ CORS_ALLOW_METHODS = [
     'OPTIONS',
 ]
 
-
 # Application definition
 
 INSTALLED_APPS = [

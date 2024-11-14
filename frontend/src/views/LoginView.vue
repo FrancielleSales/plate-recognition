@@ -32,6 +32,12 @@ const cardName = computed(() => {
   return showRegister.value ? "Cadastrar" : "Entrar";
 });
 
+// Show register card and clear error message
+const showRegisterCard = () => {
+  errorMessage.value = "";
+  showRegister.value = true;
+};
+
 // Function to validate fields
 const validateFields = (user) => {
   errorMessage.value = "";
@@ -53,20 +59,20 @@ const validateFields = (user) => {
   return null;
 };
 
-// Function to handle login
+// Function to handle user login
 const handleLogin = async () => {
   const error = validateFields(userLogin.value);
   if (error) {
     errorMessage.value = error;
     return;
   }
+
   loading.value = true;
 
   try {
     const params = userLogin.value;
-    const res = await post("/login", params);
+    const res = await post("/users/login/", params);
 
-    // Store userLogin information in localStorage
     localStorage.setItem("user_id", res.id);
     localStorage.setItem("user_name", res.name);
 
@@ -74,11 +80,12 @@ const handleLogin = async () => {
 
     router.push("/inicio");
   } catch (error) {
-    errorMessage.value = error.value;
+    errorMessage.value = "Usuário e/ou senha incorreto!";
   }
   loading.value = false;
 };
 
+// Function to handle user register
 const handleRegister = async () => {
   const error = validateFields(userRegister.value);
   if (error) {
@@ -96,7 +103,6 @@ const handleRegister = async () => {
     showRegister.value = false;
   } catch (error) {
     errorAlert("Erro ao tentar criar usuário!");
-    errorMessage.value = error.value;
   }
   loading.value = false;
   userRegister.value = {};
@@ -150,7 +156,7 @@ const handleRegister = async () => {
               Ainda não possui uma conta?
               <a
                 class="text-primary hover-underline"
-                @click="showRegister = true"
+                @click="showRegisterCard()"
                 >Cadastre-se</a
               >
             </p>
