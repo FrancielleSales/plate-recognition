@@ -7,7 +7,6 @@ import useCheckSession from "../composables/useCheckSession.js";
 import ButtonProcessImage from "@/components/ButtonProcessImage.vue";
 import DropZone from "@/components/DropZone.vue";
 import NavBar from "@/components/NavBar.vue";
-import Spinner from "@/components/Spinner.vue";
 
 // Instance variables
 const router = useRouter();
@@ -16,10 +15,10 @@ const router = useRouter();
 const USER_ID = localStorage.getItem("user_id");
 const imageName = ref(null);
 const imageSrc = ref(null);
+const dropZoneKey = ref(0);
+const processImageKey = ref(0);
 const processingImage = ref(false);
 const imageProcessed = ref(false);
-const plateNumber = ref(null);
-const precision = ref(null);
 const isSessionExpired = !useCheckSession();
 
 // Function for upload image
@@ -43,18 +42,19 @@ const handleProcessStatus = (updateStatus) => {
   processingImage.value = updateStatus;
 };
 
-// Function to handle result
-const handleResultStatus = (updateStatus, resultImageSrc) => {
+// Function to handle result status
+const handleResultStatus = (updateStatus) => {
   imageProcessed.value = updateStatus;
-  imageSrc.value = resultImageSrc;
 };
 
 // Function for allow process another image
 const processAnotherImage = () => {
   imageName.value = null;
   imageSrc.value = null;
-  processingImage.value = null;
-  imageProcessed.value = null;
+  processingImage.value = false;
+  imageProcessed.value = false;
+  dropZoneKey.value++;
+  processImageKey.value++;
 };
 
 // Check if session is valid
@@ -66,7 +66,7 @@ onMounted(() => {
 <template>
   <div>
     <NavBar></NavBar>
-    <div v-if="!processingImage">
+    <div v-show="!processingImage">
       <h5>
         {{
           imageSrc
@@ -75,75 +75,37 @@ onMounted(() => {
         }}
       </h5>
       <DropZone
+        :key="dropZoneKey"
         :allowedTypes="'image/png, image/jpeg'"
         @upload="handleUpload"
-      />
-      <div v-show="imageSrc" class="text-center mt-3">
-        <ButtonProcessImage
-          :userId="USER_ID"
-          :imageName="imageName"
-          :imageSrc="imageSrc"
-          @updateProcessStatus="handleProcessStatus"
-          @updateResultStatus="handleResultStatus"
-        ></ButtonProcessImage>
-      </div>
+      ></DropZone>
     </div>
-    <div v-else-if="processingImage && !imageProcessed">
-      <h5>Imagem em processamento...</h5>
-      <Spinner :loading="processingImage" />
+    <div v-show="imageSrc" class="text-center mt-3">
+      <ButtonProcessImage
+        :key="processImageKey"
+        :userId="USER_ID"
+        :imageName="imageName"
+        :imageSrc="imageSrc"
+        @updateProcessStatus="handleProcessStatus"
+        @updateResultStatus="handleResultStatus"
+      ></ButtonProcessImage>
     </div>
-    <div v-else>
-      <h5>Resultado</h5>
-      <div class="image-container">
-        <img :src="imageSrc" alt="Imagem Processada" class="processed-image" />
-      </div>
-      <div class="result-info">
-        <div><b>Placa:</b> {{ plateNumber || "Indefinida" }}</div>
-        <div><b>Precisão:</b> {{ precision || "Indefinida" }}</div>
-      </div>
-      <div class="text-center mt-3">
-        <button
-          type="button"
-          class="btn btn-primary btn-md"
-          @click="processAnotherImage"
-        >
-          Processar outra imagem
-        </button>
-      </div>
+    <div v-show="imageProcessed" class="text-center mt-4">
+      <button
+        type="button"
+        class="btn btn-secondary btn-md"
+        @click="processAnotherImage"
+      >
+        Processar outra imagem
+      </button>
     </div>
   </div>
 </template>
 
 <style scoped>
-h5,
-p {
+h5 {
   display: block;
   text-align: center;
   margin-top: 4rem;
-}
-
-.image-container {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.processed-image {
-  max-width: 80%;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  margin-bottom: 20px;
-}
-
-.result-info {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  margin-top: 1rem;
 }
 </style>

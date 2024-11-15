@@ -37,6 +37,7 @@ function getIconName() {
       'alert-dismissible',
       'fade',
       'show',
+      'text-start',
     ]"
     role="alert"
     data-bs-theme="light"
