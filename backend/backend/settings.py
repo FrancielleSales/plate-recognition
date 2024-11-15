@@ -10,7 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+# # Set the file upload directory
+# MEDIA_URL = '/media/'
+
+# # Folder where images will be stored on the file system
+# MEDIA_ROOT = '/mnt/images'
+
+# # Check if Django has permission to write to this directory
+# if not os.path.exists(MEDIA_ROOT):
+#     os.makedirs(MEDIA_ROOT)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,6 +62,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'images',
     'users',
 ]
 
