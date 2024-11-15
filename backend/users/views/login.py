@@ -19,7 +19,11 @@ class UserLoginView(APIView):
                 return Response({"detail": "Credenciais inválidas."}, status=status.HTTP_401_UNAUTHORIZED)
 
             if check_password(password, user.password):
-                return Response({"message": "Login realizado com sucesso!"}, status=status.HTTP_200_OK)
+                return Response({
+                    "message": "Login realizado com sucesso!",
+                    "user_id": user.id,
+                    "user_name": user.name,
+                }, status=status.HTTP_200_OK)
             else:
                 return Response({"detail": "Credenciais inválidas."}, status=status.HTTP_401_UNAUTHORIZED)
         

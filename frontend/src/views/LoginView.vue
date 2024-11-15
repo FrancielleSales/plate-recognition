@@ -73,8 +73,8 @@ const handleLogin = async () => {
     const params = userLogin.value;
     const res = await post("/users/login/", params);
 
-    localStorage.setItem("user_id", res.id);
-    localStorage.setItem("user_name", res.name);
+    localStorage.setItem("user_id", res.user_id);
+    localStorage.setItem("user_name", res.user_name);
 
     userLogin.value = {};
 

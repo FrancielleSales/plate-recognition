@@ -13,6 +13,8 @@ import Spinner from "@/components/Spinner.vue";
 const router = useRouter();
 
 // Component's variables
+const USER_ID = localStorage.getItem("user_id");
+const imageName = ref(null);
 const imageSrc = ref(null);
 const processingImage = ref(false);
 const imageProcessed = ref(false);
@@ -24,6 +26,8 @@ const isSessionExpired = !useCheckSession();
 const handleUpload = (files) => {
   const file = files[0];
   const reader = new FileReader();
+
+  imageName.value = files[0].name;
 
   reader.onload = (e) => {
     imageSrc.value = e.target.result;
@@ -47,6 +51,7 @@ const handleResultStatus = (updateStatus, resultImageSrc) => {
 
 // Function for allow process another image
 const processAnotherImage = () => {
+  imageName.value = null;
   imageSrc.value = null;
   processingImage.value = null;
   imageProcessed.value = null;
@@ -75,9 +80,12 @@ onMounted(() => {
       />
       <div v-show="imageSrc" class="text-center mt-3">
         <ButtonProcessImage
+          :userId="USER_ID"
+          :imageName="imageName"
+          :imageSrc="imageSrc"
           @updateProcessStatus="handleProcessStatus"
           @updateResultStatus="handleResultStatus"
-        />
+        ></ButtonProcessImage>
       </div>
     </div>
     <div v-else-if="processingImage && !imageProcessed">
