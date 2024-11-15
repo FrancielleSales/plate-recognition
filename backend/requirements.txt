@@ -1,3 +1,10 @@
-ultralytics
-opencv-python
+
+Django
+django-cors-headers
+djangorestframework
 easyocr
+numpy
+opencv-python
+Pillow
+psycopg2
+ultralytics
