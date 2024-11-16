@@ -6,7 +6,6 @@ const useApi = () => {
   const get = async (url, params = null) => {
     try {
       const response = await axiosInstance.get(url, { params });
-      console.log(response)
 
       if (response.data) return response.data;
 

@@ -40,9 +40,8 @@ const fetchAllResults = async () => {
   try {
     const params = { user_id: USER_ID };
     results.value = await get("/results/results/", params);
-    console.log(results.value);
   } catch (error) {
-    console.log("Erro ao buscar resultados:", error);
+    console.log(error);
   }
 };
 

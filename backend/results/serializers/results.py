@@ -2,7 +2,7 @@ from rest_framework import serializers
 from results.models.results import Results
 
 class ResultsSerializer(serializers.ModelSerializer):
-    image_name = serializers.CharField(source='image.name')
+    image_name = serializers.CharField(source='image.name', read_only=True)
 
     class Meta:
         model = Results

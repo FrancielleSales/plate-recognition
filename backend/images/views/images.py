@@ -48,7 +48,7 @@ class ImagesView(APIView):
 
         current_dir = os.path.dirname(os.path.abspath(__file__))
         yolo_model_path = f'{current_dir}/../../yolo-model/yolo-model.pt'
-        print(yolo_model_path)
+
         process = ProcessImages(yolo_model_path, output_path, ['placa-carro'])
 
         img_data_processed, img_path, img_classes_data = process.detect_image_classes(image, image_name)
@@ -72,7 +72,6 @@ class ImagesView(APIView):
                     'license_plate': item.plate,
                     'plate_precision': item.plate_confidence})
                 if resultsSerializer.is_valid():
-                    print(' result eh valido ')
                     resultsSerializer.save()
 
             return Response({

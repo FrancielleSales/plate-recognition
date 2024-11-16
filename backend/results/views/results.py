@@ -13,7 +13,7 @@ class ResultsView(APIView):
         if user_id is not None:
             results = Results.objects.filter(user_id=user_id).select_related('image')
         else:
-            results = Results.objects.all()
+            results = Results.objects.all().select_related('image')
 
         if not results:
             return Response({"detail": "No results found"}, status=status.HTTP_404_NOT_FOUND)
