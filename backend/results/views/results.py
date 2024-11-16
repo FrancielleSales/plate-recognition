@@ -11,7 +11,7 @@ class ResultsView(APIView):
         user_id = request.query_params.get('user_id', None)
 
         if user_id is not None:
-            results = Results.objects.filter(user_id=user_id)
+            results = Results.objects.filter(user_id=user_id).select_related('image')
         else:
             results = Results.objects.all()
 

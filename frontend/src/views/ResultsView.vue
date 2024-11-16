@@ -87,7 +87,7 @@ onMounted(() => {
         <tbody>
           <tr v-for="result in results" :key="result.id">
             <td>
-              {{ result.name || "-" }}
+              {{ result.image_name || "-" }}
             </td>
             <td>
               {{ result.x_min || "-" }}
