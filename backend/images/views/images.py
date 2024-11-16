@@ -6,6 +6,7 @@ import base64
 from io import BytesIO
 from PIL import Image as PILImage
 from images.serializers.images import ImagesSerializer
+from results.serializers.results import ResultsSerializer
 from images.models.images import Images
 from process_images.process_images import ProcessImages
 
@@ -43,7 +44,7 @@ class ImagesView(APIView):
             print(ex)
             return Response({"detail": "Erro ao salvar a imagem."}, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = ImagesSerializer(data={'name': image_name, 'path': path, 'user': user_id})
+        imagesSerializer = ImagesSerializer(data={'name': image_name, 'path': path, 'user': user_id})
 
         current_dir = os.path.dirname(os.path.abspath(__file__))
         yolo_model_path = f'{current_dir}/../../yolo-model/yolo-model.pt'
@@ -55,11 +56,29 @@ class ImagesView(APIView):
 
         plate = [{'text': item.plate, 'confidence': item.plate_confidence} for item in img_classes_data]
 
-
         image_base64_processsed = self._convert_pil_to_base64(img_data_processed)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"detail": "Imagem processada e salva com sucesso!", "path": img_path, "image": image_base64_processsed, "number_of_plates": number_of_plates, "plate": plate}, status=status.HTTP_201_CREATED)
+        if imagesSerializer.is_valid():
+            image_saved = imagesSerializer.save()
+            for item in img_classes_data:
+                resultsSerializer = ResultsSerializer(data={
+                    'user': user_id,
+                    'image': image_saved.id,
+                    'x_min': item.x1,
+                    'y_min': item.y1,
+                    'x_max': item.x2,
+                    'y_max': item.y2,
+                    'points_precision': item.plate_confidence,
+                    'license_plate': item.plate,
+                    'plate_precision': item.plate_confidence})
+                if resultsSerializer.is_valid():
+                    print(' result eh valido ')
+                    resultsSerializer.save()
+
+            return Response({
+                "detail": "Imagem processada e salva com sucesso!",
+                "path": img_path, "image": image_base64_processsed,
+                "number_of_plates": number_of_plates, "plate": plate},
+                status=status.HTTP_201_CREATED)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(imagesSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
