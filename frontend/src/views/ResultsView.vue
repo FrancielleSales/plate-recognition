@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 import useAlert from "../composables/useAlert.js";
+import useApi from "../composables/useApi.js";
 import useCheckSession from "../composables/useCheckSession.js";
 
 import Alert from "@/components/Alert.vue";
@@ -15,6 +16,7 @@ import Spinner from "@/components/Spinner.vue";
 const router = useRouter();
 
 // Component's variables
+const USER_ID = localStorage.getItem("user_id");
 const results = ref([]);
 const fields = [
   { key: "name", label: "Imagem" },
@@ -24,15 +26,23 @@ const fields = [
   { key: "y2", label: "y2" },
   { key: "pointsPrecision", label: "Precisão pontos" },
   { key: "plateNumber", label: "Placa" },
-  { key: "pointsPrecision", label: "Precisão placa" },
+  { key: "platePrecision", label: "Precisão placa" },
   { key: "actions", label: "Ações" },
 ];
 const { showAlert, alertType, alertMessage, successAlert, clearAlert } =
   useAlert();
+const { get } = useApi();
 const isSessionExpired = !useCheckSession();
 
-const fetchAllResults = () => {
-  console.log("getResults");
+const fetchAllResults = async () => {
+  results.value = [];
+
+  try {
+    const params = { user_id: USER_ID };
+    results.value = await get("/results/results/", params);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const refreshResultDeleted = (resultId) => {
@@ -76,33 +86,32 @@ onMounted(() => {
         <tbody>
           <tr v-for="result in results" :key="result.id">
             <td>
-              {{ result.name || "-" }}
+              {{ result.image_name || "-" }}
             </td>
             <td>
-              {{ result.x1 || "-" }}
+              {{ result.x_min || "-" }}
             </td>
             <td>
-              {{ result.y1 || "-" }}
+              {{ result.y_min || "-" }}
             </td>
             <td>
-              {{ result.x2 || "-" }}
+              {{ result.x_max || "-" }}
             </td>
             <td>
-              {{ result.y2 || "-" }}
+              {{ result.y_max || "-" }}
             </td>
             <td>
-              {{ result.pointsPrecision || "-" }}
+              {{ (result.points_precision * 100).toFixed(2) + " %" || "-" }}
             </td>
             <td>
-              {{ result.plateNumber || "-" }}
+              {{ result.license_plate || "-" }}
             </td>
             <td>
-              {{ result.platePrecision || "-" }}
+              {{ (result.plate_precision * 100).toFixed(2) + " %" || "-" }}
             </td>
             <td>
               <ButtonResultImage
-                :resultId="result.id"
-                :imageName="result.name"
+                :imageName="result.image_name"
               ></ButtonResultImage>
               <ButtonResultDelete
                 :resultId="result.id"

@@ -38,18 +38,11 @@ GRANT ALL PRIVILEGES ON DATABASE db_pr TO dbpr;
 
 To exit the shell, use: \q
 
-**To create the database tables and add users for testing:**
+**To create the database tables:**
 
 ```sh
 cd /database
 python3 config.py
-```
-
-**To run database check:**
-
-```sh
-cd database/maintenance
-python3 verify_database.py
 ```
 
 **To create a backup:**
@@ -66,6 +59,34 @@ python3 backup_database.py
 ```sh
 cd backend
 pip install -r requirements.txt
+```
+
+**Create migrations for all apps**
+
+```sh
+cd /backend
+python manage.py makemigrations
+```
+
+**For apply migrations**
+
+```sh
+cd /backend
+python manage.py migrate
+```
+
+**For check migrations**
+
+```sh
+cd /backend
+python manage.py showmigrations
+```
+
+**For run a fake migration**
+
+```sh
+cd /backend
+python manage.py migrate <app_name> <migration_name> --fake
 ```
 
 **Start backend**
@@ -93,4 +114,5 @@ npm run serve
 **Ports**
 
 > Frontend: localhost:8080
+
 > Backend: localhost:8000

@@ -46,9 +46,8 @@ class ProcessImages:
         return x1, y1, x2, y2, confidence, class_id, class_name
 
     def _save_processed_img(self, image_name, image, number_of_classes) -> str:
-        date_fmt = datetime.now().strftime("%Y%m%d_%H%M%S.%f")
         croped_image_name = (
-            f"{image_name}_all_classes_{number_of_classes}_{date_fmt}.jpg"
+            f"{image_name}_processed.jpg"
         )
         ret = self.save_file.save_image(self.output_path, croped_image_name, image)
         return ret
@@ -181,7 +180,7 @@ class ProcessImages:
             )
 
         image_processed_path = self._save_processed_img(
-            Path(image_name).name, processed_image, count_classes
+            Path(image_name).stem, processed_image, count_classes
         )
 
         image_processed_cvt = self.convert_cv2_to_pil(processed_image)

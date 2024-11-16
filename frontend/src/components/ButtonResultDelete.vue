@@ -37,7 +37,7 @@ const deleteResult = async () => {
   clearAlert();
   try {
     const params = { result_id: props.resultId };
-    await remove("/result/remove", params);
+    await remove("/results/results/", params);
     emits("refreshResultDeleted", props.resultId);
     thisDeleteModal.value.hide();
   } catch (error) {

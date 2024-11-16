@@ -7,7 +7,7 @@ const useApi = () => {
     try {
       const response = await axiosInstance.get(url, { params });
 
-      if (response.data.data) return response.data.data;
+      if (response.data) return response.data;
 
       return "";
     } catch (error) {

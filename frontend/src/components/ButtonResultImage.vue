@@ -1,15 +1,10 @@
 <script setup>
 import { ref } from "vue";
 
-import useApi from "../composables/useApi.js";
-
 import ModalWithoutFooter from "@/components/ModalWithoutFooter.vue";
 
 // Props
 const props = defineProps({
-  resultId: {
-    type: [Number, String],
-  },
   imageName: {
     type: String,
     default: "",
@@ -18,20 +13,14 @@ const props = defineProps({
 
 // Component variables
 const thisImageModal = ref(null);
-const imageSrc = ref(null);
-const { get } = useApi();
+const imageSrc = ref(
+  "/media/images/" +
+    props.imageName.substring(0, props.imageName.lastIndexOf(".")) +
+    "_processed.jpg",
+);
 
-// Open the modal to confirm deletion
-const showImageResultModal = async () => {
-  imageSrc.value = null;
-
-  try {
-    const params = { result_id: props.resultId };
-    imageSrc.value = await get("/results/image", params);
-    thisImageModal.value.show();
-  } catch (error) {
-    console.log(error);
-  }
+const showImageResultModal = () => {
+  thisImageModal.value.show();
 };
 </script>
 

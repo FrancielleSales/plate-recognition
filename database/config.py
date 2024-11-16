@@ -28,7 +28,6 @@ def execute_sql_file(file_path):
 if __name__ == '__main__':
     try:
         execute_sql_file('sql/init.sql')
-        execute_sql_file('seeds/debug.sql')
-        print("Scripts executed succesfully!")
+        print("Script executed succesfully!")
     except Exception as e:
         print(f"Error: {e}")
