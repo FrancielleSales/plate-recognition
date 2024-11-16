@@ -38,7 +38,7 @@ GRANT ALL PRIVILEGES ON DATABASE db_pr TO dbpr;
 
 To exit the shell, use: \q
 
-**To create the database tables and add users for testing:**
+**To create the database tables:**
 
 ```sh
 cd /database
@@ -82,7 +82,7 @@ cd /backend
 python manage.py showmigrations
 ```
 
-**if it is necessary to run fake migration**
+**For run a fake migration**
 
 ```sh
 cd /backend
@@ -114,4 +114,5 @@ npm run serve
 **Ports**
 
 > Frontend: localhost:8080
+
 > Backend: localhost:8000
