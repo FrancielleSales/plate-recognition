@@ -111,8 +111,7 @@ onMounted(() => {
             </td>
             <td>
               <ButtonResultImage
-                :resultId="result.id"
-                :imageName="result.name"
+                :imageName="result.image_name"
               ></ButtonResultImage>
               <ButtonResultDelete
                 :resultId="result.id"
